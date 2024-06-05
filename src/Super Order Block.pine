@@ -4,7 +4,7 @@
 // ╚═══════════════════════════════════════╝
 
 //@version=5
-indicator('Super OrderBlock / FVG / BoS Tools by makuchaku & eFe', overlay = true, max_bars_back = 5000, max_boxes_count = 500,max_labels_count = 500,max_lines_count = 500)
+indicator('Super OrderBlock & FVG & BoS', overlay = true, max_bars_back = 5000, max_boxes_count = 500,max_labels_count = 500,max_lines_count = 500)
 
 //////////   Super   ////////// 
 //////////  Colors   ////////// 
@@ -96,9 +96,8 @@ UltrOrange									= #ff5a00								// UltrOrange
 plotOB						= input.bool	(defval = true,								title = 'Plot OB',									group = 'Order Blocks')
 obBullColor					= input.color	(defval = color.new(UltrBlue, 78),			title = 'Bullish OB Color',					inline = 'Set Custom Color',		group = 'Order Blocks')
 obBearColor					= input.color	(defval = color.new(UltrRed, 78),			title = 'Bearish OB Color',					inline = 'Set Custom Color',		group = 'Order Blocks')
-obBoxBorder					= input.string	(defval = line.style_solid,					title = 'OB Box Border Style',				options = [line.style_dashed, line.style_dotted, line.style_solid],		group = 'Order Blocks')
 obBorderTransparency		= input.int		(defval = 80,								title = 'OB Border Box Transparency',		minval = 0,		maxval = 100,		group = 'Order Blocks')
-obMaxBoxSet					= input.int		(defval = 10,								title = 'Maximum OB Box Displayed',			minval = 1,		maxval = 100,		group = 'Order Blocks')
+obMaxBoxSet					= input.int		(defval = 30,								title = 'Maximum OB Box Displayed',			minval = 1,		maxval = 100,		group = 'Order Blocks')
 filterMitOB					= input.bool	(defval = false,							title = 'Custom Color Mitigated OB',				group = 'Order Blocks')
 mitOBColor					= input.color	(defval = color.new(UltrLyla, 85),			title = 'Mitigated OB Color', 				inline = 'Set Custom Color Mit OB',	group = 'Order Blocks')
 
@@ -107,41 +106,38 @@ plotStructureBreakingFVG	= input.bool	(defval = true,								title = 'Plot Struc
 fvgBullColor				= input.color	(defval = color.new(UltrYellow, 90),		title = 'Bullish FVG Color',				inline = 'Set Custom Color',		group = 'Fair Value Gaps')
 fvgBearColor				= input.color	(defval = color.new(UltrYellow, 90),		title = 'Bearish FVG Color',				inline = 'Set Custom Color',		group = 'Fair Value Gaps')
 fvgStructBreakingColor		= input.color	(defval = color.new(UltrOrange, 90),		title = 'Structure Breaking FVG Color',		inline = 'Set Custom Color',		group = 'Fair Value Gaps')
-fvgBoxBorder				= input.string	(defval = line.style_solid,					title = 'FVG Box Border Style',				options = [line.style_dashed, line.style_dotted, line.style_solid],		group = 'Fair Value Gaps')
-fvgBorderTransparency		= input.int		(defval = 80,								title = 'FVG Border Box Transparency',		minval = 0, maxval = 100,			group = 'Fair Value Gaps')
-fvgMaxBoxSet				= input.int		(defval = 10,								title = 'Maximum FVG Box Displayed',		minval = 1, maxval = 100,			group = 'Fair Value Gaps')
-filterMitFVG				= input.bool	(defval = false,							title = 'Custom Color Mitigated FVG',						group = 'Fair Value Gaps')
+fvgBorderTransparency		= input.int		(defval = 80,								title = 'FVG Border Box Transparency',		minval = 0,		maxval = 100,		group = 'Fair Value Gaps')
+fvgMaxBoxSet				= input.int		(defval = 30,								title = 'Maximum FVG Box Displayed',		minval = 1,		maxval = 100,		group = 'Fair Value Gaps')
+filterMitFVG				= input.bool	(defval = false,							title = 'Custom Color Mitigated FVG',											group = 'Fair Value Gaps')
 mitFVGColor					= input.color	(defval = color.new(UltrYellow, 95),		title = 'Mitigated FVG Color',				inline = 'Set Custom Color Mit FVG', group = 'Fair Value Gaps')
 
 plotRJB						= input.bool	(defval = true,								title = 'Plot RJB',							inline = 'RJB sets',				group = 'Rejection Blocks')
 rjbBullColor				= input.color	(defval = color.new(UltrBlue, 70),			title = 'Bullish RJB Color',				inline = 'Set Custom Color',		group = 'Rejection Blocks')
 rjbBearColor				= input.color	(defval = color.new(UltrRed, 70),			title = 'Bearish RJB Color',				inline = 'Set Custom Color',		group = 'Rejection Blocks')
-rjbBoxBorder				= input.string	(defval = line.style_solid,					title = 'RJB Box Border Style',				options = [line.style_dashed, line.style_dotted, line.style_solid],		group = 'Rejection Blocks')
-rjbBorderTransparency		= input.int		(defval = 50,								title = 'RJB Border Box Transparency',		minval = 0, maxval = 100,			group = 'Rejection Blocks')
-rjbMaxBoxSet				= input.int		(defval = 10,								title = 'Maximum RJB Box Displayed',		minval = 1, maxval = 100,			group = 'Rejection Blocks')
+rjbBorderTransparency		= input.int		(defval = 50,								title = 'RJB Border Box Transparency',		minval = 0,		maxval = 100,		group = 'Rejection Blocks')
+rjbMaxBoxSet				= input.int		(defval = 30,								title = 'Maximum RJB Box Displayed',		minval = 1,		maxval = 100,		group = 'Rejection Blocks')
 filterMitRJB				= input.bool	(defval = false,							title = 'Custom Color Mitigated RJB',				group = 'Rejection Blocks')
 mitRJBColor					= input.color	(defval = color.new(UltrMenta10, 90),		title = 'Mitigated RJB Color',				inline = 'Set Custom Color Mit RJB', group = 'Rejection Blocks')
 
-plotPVT						= input.bool	(defval = true,								title = 'Plot Pivots',								group = 'Pivots')
-pivotLookup 				= input.int		(defval = 1,								title='Pivot Lookup',	minval = 1,		maxval = 5,				group = 'Pivots')
+plotPVT						= input.bool	(defval = false,							title = 'Plot Pivots',								group = 'Pivots')
+pivotLookup 				= input.int		(defval = 1,								title='Pivot Lookup',	minval = 1,		maxval = 5,								group = 'Pivots')
 pvtTopColor					= input.color	(defval = color.new(UltrLightGray, 0),		title = 'Pivot Top Color',					inline = 'PVT Color',				group = 'Pivots')
 pvtBottomColor				= input.color	(defval = color.new(UltrLightGray, 0),		title = 'Pivot Bottom Color',				inline = 'PVT Color',				group = 'Pivots')
 
 plotBOS						= input.bool	(defval = false,							title = 'Plot BoS',							inline = 'BOS sets',				group = 'Crossovers')
-useHighLowForBullishBoS		= input.bool	(defval = false,							title = 'Use High/Low for Bullish BoS (for Bearish setup)',			group = 'Crossovers')
-useHighLowForBearishBoS		= input.bool	(defval = false,							title = 'Use High/Low for Bearish BoS (for Bullish setup)',			group = 'Crossovers')
+useHighLowForBullishBoS		= input.bool	(defval = false,							title = 'Use High/Low for Bullish BoS (for Bearish setup)',						group = 'Crossovers')
+useHighLowForBearishBoS		= input.bool	(defval = false,							title = 'Use High/Low for Bearish BoS (for Bullish setup)',						group = 'Crossovers')
 bosBoxFlag 					= input.bool	(defval = false,							title='BoS Box Length Manually',			group='Crossovers')
-bosBoxLength 				= input.int		(defval = 3,								title='BoS Box Length Manually',			minval=1,		maxval=5,			inline='BoS Boxes',		group = 'Crossovers')
+bosBoxLength 				= input.int		(defval = 3,								title='BoS Box Length Manually',	minval=1,	maxval=5,	inline='BoS Boxes',	group = 'Crossovers')
 bosBullColor				= input.color	(defval = color.new(UltrBlue, 90),			title = 'Bullish BoS Color',				inline = 'Set Custom Color',		group='Crossovers')
 bosBearColor				= input.color	(defval = color.new(UltrRed, 90),			title = 'Bearish BoS Color',				inline = 'Set Custom Color',		group='Crossovers')
-bosBoxBorder				= input.string	(defval = line.style_solid,					title = 'BoS Box Border Style',				options = [line.style_dashed, line.style_dotted, line.style_solid],		group='Crossovers')
 bosBorderTransparency		= input.int		(defval = 80,								title = 'BoS Border Box Transparency',		minval = 0,		maxval = 100,		group='Crossovers')
 bosMaxBoxSet				= input.int		(defval = 10,								title = 'Maximum BoS Box Displayed',		minval = 1,		maxval = 100,		group='Crossovers')
 
-plotHVB						= input.bool	(defval = false,							title = 'Plot HVB',									group = 'High Volume Bar')
+plotHVB						= input.bool	(defval = false,							title = 'Plot HVB',							group = 'High Volume Bar')
 hvbBullColor				= input.color	(defval = UltrBlue,							title = 'Bullish HVB Color',				inline = 'Set Custom Color',		group='High Volume Bar')
 hvbBearColor				= input.color	(defval = UltrRed,							title = 'Bearish HVB Color',				inline = 'Set Custom Color',		group='High Volume Bar')
-hvbEMAPeriod				= input.int		(defval = 12, minval=1,						title = 'Volume EMA Period',						group = 'High Volume Bar')
+hvbEMAPeriod				= input.int		(defval = 12, minval=1,						title = 'Volume EMA Period',													group = 'High Volume Bar')
 hvbMultiplier				= input.float	(defval = 1.5,								title = 'Volume Multiplier',				minval = 1,		maxval = 100,		group = 'High Volume Bar')
 
 plotPPDD					= input.bool	(defval = false,							title = "Plot PPDD OB's",					group='Qualitative indicators')
@@ -153,28 +149,47 @@ obfvgBullColor				= input.color	(defval = color.new(UltrBlue, 0),			title = 'Bul
 obfvgBearColor				= input.color	(defval = color.new(UltrRed, 0),			title = 'Bearish Stacked OB+FVG Color',		group='Qualitative indicators',		inline = 'OBFVG Color')
 
 plotLabelOB					= input.bool	(defval = true,								title = 'Plot OB Label',					inline = 'OB label',				group = 'Label Options')
-obLabelColor				= input.color	(defval = color.new(UltrMenta10, 80),						title = 'Color',							inline = 'OB label',				group = 'Label Options')
-obLabelSize					= input.string	(defval = size.tiny,						title = "Size", options = [size.huge, size.large, size.small, size.tiny, size.auto, size.normal],					inline = 'OB label',		group = 'Label Options')
+obLabelColor				= input.color	(defval = color.new(UltrMenta10, 80),		title = 'Color',							inline = 'OB label',				group = 'Label Options')
 
 plotLabelFVG				= input.bool	(defval = false,							title = 'Plot FVG Label',					inline = 'FVG label',				group = 'Label Options')
 fvgLabelColor				= input.color	(defval = UltrMenta10,						title = 'Color',							inline = 'FVG label',				group = 'Label Options')
-fvgLabelSize				= input.string	(defval = size.tiny,						title = "Size", options = [size.huge, size.large, size.small, size.tiny, size.auto, size.normal],					inline = 'FVG label',		group = 'Label Options')
 
 plotLabelRJB				= input.bool	(defval = false,							title = 'Plot RJB Label',					inline = 'RJB label',				group = 'Label Options')
 rjbLabelColor				= input.color	(defval = UltrMenta10,						title = 'Color',							inline = 'RJB label',				group = 'Label Options')
-rjbLabelSize				= input.string	(defval = size.tiny,						title = "Size", options = [size.huge, size.large, size.small, size.tiny, size.auto, size.normal],					inline = 'RJB label',	group = 'Label Options')
 
-plotLabelBOS				= input.bool	(defval = false,								title = 'Plot BoS Label',					inline = 'BOS label',				group = 'Label Options')
+plotLabelBOS				= input.bool	(defval = false,							title = 'Plot BoS Label',					inline = 'BOS label',				group = 'Label Options')
 bosLabelColor				= input.color	(defval = UltrMenta10,						title = 'Color',							inline = 'BOS label',				group = 'Label Options')
-bosLabelSize				= input.string	(defval = size.tiny,						title = "Size", options = [size.huge, size.large, size.small, size.tiny, size.auto, size.normal],					inline = 'BOS label',		group = 'Label Options')
 
-//  ══  Box Types  ══
+labelSize					= input.string	(defval = "Tiny",			title = "Text Size", 			options = ["Huge", "Large", "Small", "Tiny", "Auto", "Normal"],	group = 'Global')
+boxBorder					= input.string	(defval = "Solid",			title = "Type Border Style",	options = ["Dashed", "Dotted", "Solid"],						group = 'Global')
+
+//////////  Super  ////////// 
+//////////  Types  ////////// 
 var int _ob					= 1
 var int _fvg				= 2
 var int _rjb				= 3
 var int _bos				= 4
 
-//  ══  Box Labels  ══
+//////////  Super   ////////// 
+//////////  Switch  ////////// 
+
+string switchLabel = switch labelSize
+	"Auto"		=> size.auto
+	"Tiny"		=> size.tiny
+	"Small"		=> size.small
+	"Normal"	=> size.normal
+	"Large"		=> size.large
+	"Huge"		=> size.huge
+
+string switchBorder = switch boxBorder
+	"Solid"		=> line.style_solid
+	"Dashed"	=> line.style_dashed
+	"Dotted"	=> line.style_dotted
+
+//////////  Super   ////////// 
+//////////  Labels  ////////// 
+
+//  ══  Box  ══
 var string _obLabel			= "OB"
 var string _fvgLabel		= "FVG"
 var string _rjbLabel		= "RJB"
@@ -183,9 +198,11 @@ var string _plus			= "+"
 var string _minus			= "-"
 var string _empty			= ""
 
-//////////     Super     ////////// 
-//////////  Box Arrays  ////////// 
 
+//////////  Super   ////////// 
+//////////  Arrays  ////////// 
+
+//  ══  Box  ══
 var box[] _bearBoxesOB		= array.new_box()
 var box[] _bullBoxesOB		= array.new_box()
 var box[] _bearBoxesFVG		= array.new_box()
@@ -259,16 +276,16 @@ plot(bottom, offset=-pivotLookup, linewidth=1, color=(bottom != bottom[1] ? na :
 
 //  ══  Bullish OB Box Plotting  ══
 if isObUp(1) and plotOB
-	_bullboxOB = box.new(left=bar_index - 2, top=high[2], right=bar_index, bottom=math.min(low[2], low[1]), border_color=color.new(obBullColor, obBorderTransparency), border_style=obBoxBorder, border_width=1, bgcolor=obBullColor, 
-	 text=plotLabelOB ? _obLabel  + _plus : _empty, text_halign=text.align_right, text_valign=text.align_bottom, text_size=obLabelSize, text_color=obLabelColor)
+	_bullboxOB = box.new(left=bar_index - 2, top=high[2], right=bar_index, bottom=math.min(low[2], low[1]), border_color=color.new(obBullColor, obBorderTransparency), border_style=switchBorder, border_width=1, bgcolor=obBullColor, 
+	 text=plotLabelOB ? _obLabel  + _plus : _empty, text_halign=text.align_right, text_valign=text.align_bottom, text_size=switchLabel, text_color=obLabelColor)
 	if array.size(_bullBoxesOB) > obMaxBoxSet
 		box.delete(array.shift(_bullBoxesOB))
 	array.push(_bullBoxesOB, _bullboxOB)
 
 //  ══  Bearish OB Box Plotting  ══
 if isObDown(1) and plotOB
-	_bearboxOB = box.new(left=bar_index - 2, top=math.max(high[2], high[1]), right=bar_index, bottom=low[2], border_color=color.new(obBearColor, obBorderTransparency), border_style=obBoxBorder, border_width=1, bgcolor=obBearColor, 
-	 text=plotLabelOB ? _obLabel  + _minus : _empty, text_halign=text.align_right, text_valign=text.align_bottom, text_size=obLabelSize, text_color=obLabelColor)
+	_bearboxOB = box.new(left=bar_index - 2, top=math.max(high[2], high[1]), right=bar_index, bottom=low[2], border_color=color.new(obBearColor, obBorderTransparency), border_style=switchBorder, border_width=1, bgcolor=obBearColor, 
+	 text=plotLabelOB ? _obLabel  + _minus : _empty, text_halign=text.align_right, text_valign=text.align_bottom, text_size=switchLabel, text_color=obLabelColor)
 	if array.size(_bearBoxesOB) > obMaxBoxSet
 		box.delete(array.shift(_bearBoxesOB))
 	array.push(_bearBoxesOB, _bearboxOB)
@@ -283,11 +300,11 @@ if plotOB
 if isFvgUp(0)
 	box _bullboxFVG = na
 	if plotStructureBreakingFVG and (close[1] > top) and (low[1] < top) and (high[2] < top) and (low > top)
-		_bullboxFVG := box.new(left=bar_index-2, top=low[0], right=bar_index, bottom=high[2], bgcolor=fvgStructBreakingColor, border_color=color.new(fvgStructBreakingColor, fvgBorderTransparency), border_style=fvgBoxBorder, border_width=1,
-		 text=plotLabelFVG ? _fvgLabel  + _plus : _empty, text_halign=text.align_right, text_valign=text.align_bottom, text_size=fvgLabelSize, text_color=fvgLabelColor)        
+		_bullboxFVG := box.new(left=bar_index-2, top=low[0], right=bar_index, bottom=high[2], bgcolor=fvgStructBreakingColor, border_color=color.new(fvgStructBreakingColor, fvgBorderTransparency), border_style=switchBorder, border_width=1,
+		 text=plotLabelFVG ? _fvgLabel  + _plus : _empty, text_halign=text.align_right, text_valign=text.align_bottom, text_size=switchLabel, text_color=fvgLabelColor)        
 	else if plotFVG   
-		_bullboxFVG := box.new(left=bar_index-2, top=low[0], right=bar_index, bottom=high[2], bgcolor=fvgBullColor, border_color=color.new(fvgBullColor, fvgBorderTransparency), border_style=fvgBoxBorder, border_width=1,
-		 text=plotLabelFVG ? _fvgLabel  + _plus : _empty, text_halign=text.align_right, text_valign=text.align_bottom, text_size=fvgLabelSize, text_color=fvgLabelColor)    
+		_bullboxFVG := box.new(left=bar_index-2, top=low[0], right=bar_index, bottom=high[2], bgcolor=fvgBullColor, border_color=color.new(fvgBullColor, fvgBorderTransparency), border_style=switchBorder, border_width=1,
+		 text=plotLabelFVG ? _fvgLabel  + _plus : _empty, text_halign=text.align_right, text_valign=text.align_bottom, text_size=switchLabel, text_color=fvgLabelColor)    
 	if array.size(_bullBoxesFVG) > fvgMaxBoxSet
 		box.delete(array.shift(_bullBoxesFVG))
 	array.push(_bullBoxesFVG, _bullboxFVG)
@@ -297,11 +314,11 @@ if isFvgUp(0)
 if isFvgDown(0)
 	box _bearboxFVG = na
 	if plotStructureBreakingFVG and (close[1] < bottom) and (high[1] > bottom) and (low[2] > bottom) and (high < bottom)
-		_bearboxFVG := box.new(left=bar_index-2, top=low[2], right=bar_index, bottom=high[0], bgcolor=fvgStructBreakingColor, border_color=color.new(fvgStructBreakingColor, fvgBorderTransparency), border_style=fvgBoxBorder, border_width=1,
-		 text=plotLabelFVG ? _fvgLabel  + _minus : _empty, text_halign=text.align_right, text_valign=text.align_bottom, text_size=fvgLabelSize, text_color=fvgLabelColor)    
+		_bearboxFVG := box.new(left=bar_index-2, top=low[2], right=bar_index, bottom=high[0], bgcolor=fvgStructBreakingColor, border_color=color.new(fvgStructBreakingColor, fvgBorderTransparency), border_style=switchBorder, border_width=1,
+		 text=plotLabelFVG ? _fvgLabel  + _minus : _empty, text_halign=text.align_right, text_valign=text.align_bottom, text_size=switchLabel, text_color=fvgLabelColor)    
 	else if plotFVG
-		_bearboxFVG := box.new(left=bar_index-2, top=low[2], right=bar_index, bottom=high[0], bgcolor=fvgBearColor, border_color=color.new(fvgBearColor, fvgBorderTransparency), border_style=fvgBoxBorder, border_width=1,
-		 text=plotLabelFVG ? _fvgLabel  + _minus : _empty, text_halign=text.align_right, text_valign=text.align_bottom, text_size=fvgLabelSize, text_color=fvgLabelColor)    
+		_bearboxFVG := box.new(left=bar_index-2, top=low[2], right=bar_index, bottom=high[0], bgcolor=fvgBearColor, border_color=color.new(fvgBearColor, fvgBorderTransparency), border_style=switchBorder, border_width=1,
+		 text=plotLabelFVG ? _fvgLabel  + _minus : _empty, text_halign=text.align_right, text_valign=text.align_bottom, text_size=switchLabel, text_color=fvgLabelColor)    
 	if array.size(_bearBoxesFVG) > fvgMaxBoxSet
 		box.delete(array.shift(_bearBoxesFVG))
 	array.push(_bearBoxesFVG, _bearboxFVG)
@@ -317,15 +334,15 @@ if plotRJB
 	isDownRjb1 = isDownRjbObCondition and  (high[1] < (close[2] + 0.2*(high[2]-close[2]))) // RJB is on trapped's wick and <50% of the wick was covered by signal
 	isDownRjb2 = isDownRjbObCondition and (high[1] > high[2]) // RJB is on signal's wick
 	if isDownRjb1 and plotRJB
-		_bearboxRJB = box.new(left=bar_index-2, top=high[2], right=bar_index, bottom=close[2], bgcolor=rjbBearColor, border_color=color.new(rjbBearColor, rjbBorderTransparency), border_style=rjbBoxBorder, border_width=1,
-		 text=plotLabelRJB ? _rjbLabel  + _minus : _empty, text_halign=text.align_right, text_valign=text.align_bottom, text_size=rjbLabelSize, text_color=rjbLabelColor)
+		_bearboxRJB = box.new(left=bar_index-2, top=high[2], right=bar_index, bottom=close[2], bgcolor=rjbBearColor, border_color=color.new(rjbBearColor, rjbBorderTransparency), border_style=switchBorder, border_width=1,
+		 text=plotLabelRJB ? _rjbLabel  + _minus : _empty, text_halign=text.align_right, text_valign=text.align_bottom, text_size=switchLabel, text_color=rjbLabelColor)
 		if array.size(_bearBoxesRJB) > rjbMaxBoxSet
 			box.delete(array.shift(_bearBoxesRJB))
 		array.push(_bearBoxesRJB, _bearboxRJB)
 		
 	if isDownRjb2 and plotRJB
-		_bearboxRJB = box.new(left=bar_index-1, top=high[1], right=bar_index, bottom=open[1], bgcolor=rjbBearColor, border_color=color.new(rjbBearColor, rjbBorderTransparency), border_style=rjbBoxBorder, border_width=1,
-		 text=plotLabelRJB ? _rjbLabel  + _minus : _empty, text_halign=text.align_right, text_valign=text.align_bottom, text_size=rjbLabelSize, text_color=rjbLabelColor)
+		_bearboxRJB = box.new(left=bar_index-1, top=high[1], right=bar_index, bottom=open[1], bgcolor=rjbBearColor, border_color=color.new(rjbBearColor, rjbBorderTransparency), border_style=switchBorder, border_width=1,
+		 text=plotLabelRJB ? _rjbLabel  + _minus : _empty, text_halign=text.align_right, text_valign=text.align_bottom, text_size=switchLabel, text_color=rjbLabelColor)
 		if array.size(_bearBoxesRJB) > rjbMaxBoxSet
 			box.delete(array.shift(_bearBoxesRJB))
 		array.push(_bearBoxesRJB, _bearboxRJB)
@@ -336,15 +353,15 @@ if plotRJB
 	isUpRjb1 = isUpRjbObCondition and (low[1] > (close[2] - 0.2*(close[2]-low[2]))) // RJB is on trapped's wick and <50% of the wick was covered by signal
 	isUpRjb2 = isUpRjbObCondition and (low[1] < low[2]) // RJB is on signal's wick
 	if isUpRjb1 and plotRJB
-		_bullboxRJB = box.new(left=bar_index-2, top=close[2], right=bar_index, bottom=low[2], bgcolor=rjbBullColor, border_color=color.new(rjbBullColor, rjbBorderTransparency), border_style=rjbBoxBorder, border_width=1,
-		 text=plotLabelRJB ? _rjbLabel  + _plus : _empty, text_halign=text.align_right, text_valign=text.align_bottom, text_size=rjbLabelSize, text_color=rjbLabelColor)
+		_bullboxRJB = box.new(left=bar_index-2, top=close[2], right=bar_index, bottom=low[2], bgcolor=rjbBullColor, border_color=color.new(rjbBullColor, rjbBorderTransparency), border_style=switchBorder, border_width=1,
+		 text=plotLabelRJB ? _rjbLabel  + _plus : _empty, text_halign=text.align_right, text_valign=text.align_bottom, text_size=switchLabel, text_color=rjbLabelColor)
 		if array.size(_bullBoxesRJB) > rjbMaxBoxSet
 			box.delete(array.shift(_bullBoxesRJB))
 		array.push(_bullBoxesRJB, _bullboxRJB)
 	
 	if isUpRjb2 and plotRJB
-		_bullboxRJB = box.new(left=bar_index-1, top=open[1], right=bar_index, bottom=low[1], bgcolor=rjbBullColor, border_color=color.new(rjbBullColor, rjbBorderTransparency), border_style=rjbBoxBorder, border_width=1, 
-		 text=plotLabelRJB ? _rjbLabel  + _plus : _empty, text_halign=text.align_right, text_valign=text.align_bottom, text_size=rjbLabelSize, text_color=rjbLabelColor)
+		_bullboxRJB = box.new(left=bar_index-1, top=open[1], right=bar_index, bottom=low[1], bgcolor=rjbBullColor, border_color=color.new(rjbBullColor, rjbBorderTransparency), border_style=switchBorder, border_width=1, 
+		 text=plotLabelRJB ? _rjbLabel  + _plus : _empty, text_halign=text.align_right, text_valign=text.align_bottom, text_size=switchLabel, text_color=rjbLabelColor)
 		if array.size(_bullBoxesRJB) > rjbMaxBoxSet
 			box.delete(array.shift(_bullBoxesRJB))
 		array.push(_bullBoxesRJB, _bullboxRJB)
@@ -358,8 +375,8 @@ if plotRJB
 //  ══  Bullish BOS Box Plotting  ══
 if plotBOS
 	if ta.crossover(useHighLowForBullishBoS ? high : close, top)
-		_bullboxBOS = box.new(left=bar_index, top=top, right=bosBoxFlag ? bar_index+bosBoxLength : bar_index+1, bottom=bottom, bgcolor=bosBullColor, border_color=color.new(bosBullColor, bosBorderTransparency), border_style=bosBoxBorder, border_width=1, 
-		 text=plotLabelBOS ? _bosLabel + _plus : _empty, text_halign=text.align_right, text_valign=text.align_bottom, text_size=bosLabelSize, text_color=bosLabelColor)
+		_bullboxBOS = box.new(left=bar_index, top=top, right=bosBoxFlag ? bar_index+bosBoxLength : bar_index+1, bottom=bottom, bgcolor=bosBullColor, border_color=color.new(bosBullColor, bosBorderTransparency), border_style=switchBorder, border_width=1, 
+		 text=plotLabelBOS ? _bosLabel + _plus : _empty, text_halign=text.align_right, text_valign=text.align_bottom, text_size=switchLabel, text_color=bosLabelColor)
 		if array.size(_bullBoxesBOS) > bosMaxBoxSet
 			box.delete(array.shift(_bullBoxesBOS))
 		array.push(_bullBoxesBOS, _bullboxBOS)
@@ -367,8 +384,8 @@ if plotBOS
 //  ══  Bearish BOS Box Plotting  ══
 if plotBOS 
 	if ta.crossunder(useHighLowForBearishBoS ? low : close, bottom)
-		_bearboxBOS = box.new(left=bar_index, top=top, right=bosBoxFlag ? bar_index+bosBoxLength : bar_index+1, bottom=bottom, bgcolor=bosBearColor, border_color=color.new(bosBearColor, bosBorderTransparency), border_style=bosBoxBorder, border_width=1, 
-		 text=plotLabelBOS ? _bosLabel  + _minus : _empty, text_halign=text.align_right, text_valign=text.align_bottom, text_size=bosLabelSize, text_color=bosLabelColor)
+		_bearboxBOS = box.new(left=bar_index, top=top, right=bosBoxFlag ? bar_index+bosBoxLength : bar_index+1, bottom=bottom, bgcolor=bosBearColor, border_color=color.new(bosBearColor, bosBorderTransparency), border_style=switchBorder, border_width=1, 
+		 text=plotLabelBOS ? _bosLabel  + _minus : _empty, text_halign=text.align_right, text_valign=text.align_bottom, text_size=switchLabel, text_color=bosLabelColor)
 		if array.size(_bearBoxesBOS) > bosMaxBoxSet
 			box.delete(array.shift(_bearBoxesBOS))
 		array.push(_bearBoxesBOS, _bearboxBOS)

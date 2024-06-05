@@ -12,7 +12,7 @@
 
 #### Archivo principal
 
-[.Pine: Super Order Block & Fvg](https://github.com/munlit/SessionLite/blob/master/src/Super%20Order%20Block.pine)
+[.Pine: Super Order Block & Fvg](https://github.com/munlit/SuperOrderBlockFvg/blob/master/src/Super%20Order%20Block.pine)
 
 *  Solo es necesario copiar el codigo visualizado en RAW
 *  Pegar en el editor Pine de TradingView
