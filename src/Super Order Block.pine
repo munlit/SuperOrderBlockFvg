@@ -86,6 +86,7 @@ UltrRed										= #db004b								// UltrRed
 UltrBlue									= #003bde								// UltrBlue
 UltrYellow									= #f4de1a								// UltrYellow
 UltrSkyBlue									= #12cef8								// UltrSkyBlue
+UltrOrange									= #ff5a00								// UltrOrange
 
 ///////////////////////////////// 
 
@@ -99,18 +100,18 @@ obBoxBorder					= input.string	(defval = line.style_solid,					title = 'OB Box B
 obBorderTransparency		= input.int		(defval = 80,								title = 'OB Border Box Transparency',		minval = 0,		maxval = 100,		group = 'Order Blocks')
 obMaxBoxSet					= input.int		(defval = 10,								title = 'Maximum OB Box Displayed',			minval = 1,		maxval = 100,		group = 'Order Blocks')
 filterMitOB					= input.bool	(defval = false,							title = 'Custom Color Mitigated OB',				group = 'Order Blocks')
-mitOBColor					= input.color	(defval = color.new(UltrMenta10, 90),		title = 'Mitigated OB Color', 				inline = 'Set Custom Color Mit OB',	group = 'Order Blocks')
+mitOBColor					= input.color	(defval = color.new(UltrLyla, 85),			title = 'Mitigated OB Color', 				inline = 'Set Custom Color Mit OB',	group = 'Order Blocks')
 
 plotFVG						= input.bool	(defval = true,								title = 'Plot FVG',							inline = 'FVG sets',				group = 'Fair Value Gaps')
 plotStructureBreakingFVG	= input.bool	(defval = true,								title = 'Plot Structure Breaking FVG',		inline = 'FVG sets',				group = 'Fair Value Gaps')
 fvgBullColor				= input.color	(defval = color.new(UltrYellow, 90),		title = 'Bullish FVG Color',				inline = 'Set Custom Color',		group = 'Fair Value Gaps')
 fvgBearColor				= input.color	(defval = color.new(UltrYellow, 90),		title = 'Bearish FVG Color',				inline = 'Set Custom Color',		group = 'Fair Value Gaps')
-fvgStructBreakingColor		= input.color	(defval = color.new(UltrSkyBlue, 90),		title = 'Structure Breaking FVG Color',		inline = 'Set Custom Color',		group = 'Fair Value Gaps')
+fvgStructBreakingColor		= input.color	(defval = color.new(UltrOrange, 90),		title = 'Structure Breaking FVG Color',		inline = 'Set Custom Color',		group = 'Fair Value Gaps')
 fvgBoxBorder				= input.string	(defval = line.style_solid,					title = 'FVG Box Border Style',				options = [line.style_dashed, line.style_dotted, line.style_solid],		group = 'Fair Value Gaps')
 fvgBorderTransparency		= input.int		(defval = 80,								title = 'FVG Border Box Transparency',		minval = 0, maxval = 100,			group = 'Fair Value Gaps')
 fvgMaxBoxSet				= input.int		(defval = 10,								title = 'Maximum FVG Box Displayed',		minval = 1, maxval = 100,			group = 'Fair Value Gaps')
 filterMitFVG				= input.bool	(defval = false,							title = 'Custom Color Mitigated FVG',						group = 'Fair Value Gaps')
-mitFVGColor					= input.color	(defval = color.new(UltrMenta10, 90),		title = 'Mitigated FVG Color',				inline = 'Set Custom Color Mit FVG', group = 'Fair Value Gaps')
+mitFVGColor					= input.color	(defval = color.new(UltrYellow, 95),		title = 'Mitigated FVG Color',				inline = 'Set Custom Color Mit FVG', group = 'Fair Value Gaps')
 
 plotRJB						= input.bool	(defval = true,								title = 'Plot RJB',							inline = 'RJB sets',				group = 'Rejection Blocks')
 rjbBullColor				= input.color	(defval = color.new(UltrBlue, 70),			title = 'Bullish RJB Color',				inline = 'Set Custom Color',		group = 'Rejection Blocks')
@@ -168,31 +169,31 @@ bosLabelColor				= input.color	(defval = UltrMenta10,						title = 'Color',					
 bosLabelSize				= input.string	(defval = size.tiny,						title = "Size", options = [size.huge, size.large, size.small, size.tiny, size.auto, size.normal],					inline = 'BOS label',		group = 'Label Options')
 
 //  ══  Box Types  ══
-var int _ob  = 1
-var int _fvg = 2
-var int _rjb = 3
-var int _bos = 4
+var int _ob					= 1
+var int _fvg				= 2
+var int _rjb				= 3
+var int _bos				= 4
 
 //  ══  Box Labels  ══
-var string _obLabel  = "OB"
-var string _fvgLabel = "FVG"
-var string _rjbLabel = "RJB"
-var string _bosLabel = "BoS"
-var string _plus     = "+"
-var string _minus    = "-"
-var string _empty    = ""
+var string _obLabel			= "OB"
+var string _fvgLabel		= "FVG"
+var string _rjbLabel		= "RJB"
+var string _bosLabel		= "BoS"
+var string _plus			= "+"
+var string _minus			= "-"
+var string _empty			= ""
 
 //////////     Super     ////////// 
 //////////  Box Arrays  ////////// 
 
-var box[] _bearBoxesOB  = array.new_box()
-var box[] _bullBoxesOB  = array.new_box()
-var box[] _bearBoxesFVG = array.new_box()
-var box[] _bullBoxesFVG = array.new_box()
-var box[] _bearBoxesRJB = array.new_box()
-var box[] _bullBoxesRJB = array.new_box()
-var box[] _bearBoxesBOS = array.new_box()
-var box[] _bullBoxesBOS = array.new_box()
+var box[] _bearBoxesOB		= array.new_box()
+var box[] _bullBoxesOB		= array.new_box()
+var box[] _bearBoxesFVG		= array.new_box()
+var box[] _bullBoxesFVG		= array.new_box()
+var box[] _bearBoxesRJB		= array.new_box()
+var box[] _bullBoxesRJB		= array.new_box()
+var box[] _bearBoxesBOS		= array.new_box()
+var box[] _bullBoxesBOS		= array.new_box()
 
 //////////    Super    ////////// 
 //////////  Functions  ////////// 
