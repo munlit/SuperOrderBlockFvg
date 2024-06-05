@@ -112,8 +112,8 @@ filterMitFVG				= input.bool	(defval = false,							title = 'Custom Color Mitiga
 mitFVGColor					= input.color	(defval = color.new(UltrYellow, 95),		title = 'Mitigated FVG Color',				inline = 'Set Custom Color Mit FVG', group = 'Fair Value Gaps')
 
 plotRJB						= input.bool	(defval = true,								title = 'Plot RJB',							inline = 'RJB sets',				group = 'Rejection Blocks')
-rjbBullColor				= input.color	(defval = color.new(UltrBlue, 70),			title = 'Bullish RJB Color',				inline = 'Set Custom Color',		group = 'Rejection Blocks')
-rjbBearColor				= input.color	(defval = color.new(UltrRed, 70),			title = 'Bearish RJB Color',				inline = 'Set Custom Color',		group = 'Rejection Blocks')
+rjbBullColor				= input.color	(defval = color.new(UltrBlue, 78),			title = 'Bullish RJB Color',				inline = 'Set Custom Color',		group = 'Rejection Blocks')
+rjbBearColor				= input.color	(defval = color.new(UltrRed, 78),			title = 'Bearish RJB Color',				inline = 'Set Custom Color',		group = 'Rejection Blocks')
 rjbBorderTransparency		= input.int		(defval = 50,								title = 'RJB Border Box Transparency',		minval = 0,		maxval = 100,		group = 'Rejection Blocks')
 rjbMaxBoxSet				= input.int		(defval = 30,								title = 'Maximum RJB Box Displayed',		minval = 1,		maxval = 100,		group = 'Rejection Blocks')
 filterMitRJB				= input.bool	(defval = false,							title = 'Custom Color Mitigated RJB',				group = 'Rejection Blocks')
