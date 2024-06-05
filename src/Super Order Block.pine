@@ -6,9 +6,8 @@
 //@version=5
 indicator('Super OrderBlock / FVG / BoS Tools by makuchaku & eFe', overlay = true, max_bars_back = 5000, max_boxes_count = 500,max_labels_count = 500,max_lines_count = 500)
 
-//  ═══════════════
-//  ═══  Super  ═══
-//  ═══  Colors  ═══
+//////////   Super   ////////// 
+//////////  Colors   ////////// 
 
 // //  ═══  Visa  ═══
 	// 	Primary									= #1434CB								// VisaBrandPrimary
@@ -69,6 +68,8 @@ indicator('Super OrderBlock / FVG / BoS Tools by makuchaku & eFe', overlay = tru
 	// 	Newyork									= #C5ACE8								// Lite TFlabNewyork                     
 	// 	NYSE									= #87c2d4								// Lite TFlabNYSE                        
 
+///////////////////////////////// 
+
 //  ═══  Ultr  ═══
 UltrBlueSky10								= #59F2E9								// UltrBlueSky10
 UltrBlueSky20								= #39F0EA								// UltrBlueSky20
@@ -86,15 +87,10 @@ UltrBlue									= #003bde								// UltrBlue
 UltrYellow									= #f4de1a								// UltrYellow
 UltrSkyBlue									= #12cef8								// UltrSkyBlue
 
-// //  ═══  Instances Color  ═══
-
-// ult = Ultr.new()
-
 ///////////////////////////////// 
 
-//  ═══════════════
-//  ═══  Super  ═══
-//  ═══  Vars  ═══
+//////////   Super   ////////// 
+//////////   Vars    ////////// 
 
 plotOB						= input.bool	(defval = true,								title = 'Plot OB',									group = 'Order Blocks')
 obBullColor					= input.color	(defval = color.new(UltrBlue, 78),			title = 'Bullish OB Color',					inline = 'Set Custom Color',		group = 'Order Blocks')
@@ -172,14 +168,12 @@ bosLabelColor				= input.color	(defval = UltrMenta10,						title = 'Color',					
 bosLabelSize				= input.string	(defval = size.tiny,						title = "Size", options = [size.huge, size.large, size.small, size.tiny, size.auto, size.normal],					inline = 'BOS label',		group = 'Label Options')
 
 //  ══  Box Types  ══
-
 var int _ob  = 1
 var int _fvg = 2
 var int _rjb = 3
 var int _bos = 4
 
 //  ══  Box Labels  ══
-
 var string _obLabel  = "OB"
 var string _fvgLabel = "FVG"
 var string _rjbLabel = "RJB"
@@ -188,9 +182,8 @@ var string _plus     = "+"
 var string _minus    = "-"
 var string _empty    = ""
 
-//  ═══════════════
-//  ═══  Super  ═══
-//  ══  Box Arrays  ══
+//////////     Super     ////////// 
+//////////  Box Arrays  ////////// 
 
 var box[] _bearBoxesOB  = array.new_box()
 var box[] _bullBoxesOB  = array.new_box()
@@ -201,9 +194,8 @@ var box[] _bullBoxesRJB = array.new_box()
 var box[] _bearBoxesBOS = array.new_box()
 var box[] _bullBoxesBOS = array.new_box()
 
-//  ═══════════════
-//  ═══  Super  ═══
-//  ══  Functions  ══
+//////////    Super    ////////// 
+//////////  Functions  ////////// 
 
 isUp(index) =>
 	close[index] > open[index]
@@ -224,7 +216,6 @@ isFvgDown(index) =>
 	(high[index] < low[index + 2])
 
 //  ══  Function to Calculte Box Length  ══
-
 _controlBox(_boxes, _high, _low, _type) =>
 	if array.size(_boxes) > 0
 		for i = array.size(_boxes) - 1 to 0 by 1
@@ -252,22 +243,20 @@ _controlBox(_boxes, _high, _low, _type) =>
 				if na or (bar_index == _boxRight and not((_high > _boxLow and _low < _boxLow) or (_high > _boxHigh and _low < _boxHigh)))
 					box.set_right(_box, bar_index + 1)
 
+//////////   Super   ////////// 
+//////////  Display  ////////// 
 
-///////////////////
-//  ═══  Super  ═══
 //  ═══  Pivots  ═══
-//////////  Pivots  ////////// 
-
-hih = ta.pivothigh(high, pivotLookup, pivotLookup)
-lol = ta.pivotlow(low , pivotLookup, pivotLookup)
-top = ta.valuewhen(hih, high[pivotLookup], 0)
-bottom = ta.valuewhen(lol, low [pivotLookup], 0)
+hih			= ta.pivothigh(high,	pivotLookup,		pivotLookup)
+lol			= ta.pivotlow(low ,		pivotLookup,		pivotLookup)
+top			= ta.valuewhen(hih,		high[pivotLookup],	0)
+bottom		= ta.valuewhen(lol,		low [pivotLookup],	0)
 plot(top, offset=-pivotLookup, linewidth=1, color=(top != top[1] ? na : (plotPVT ? pvtTopColor : na)), title="Pivot Top")
 plot(bottom, offset=-pivotLookup, linewidth=1, color=(bottom != bottom[1] ? na : (plotPVT ? pvtBottomColor : na)), title="Pivot Bottom")
 
 //////////  Order Block  //////////
-//  ══  Bullish OB Box Plotting  ══
 
+//  ══  Bullish OB Box Plotting  ══
 if isObUp(1) and plotOB
 	_bullboxOB = box.new(left=bar_index - 2, top=high[2], right=bar_index, bottom=math.min(low[2], low[1]), border_color=color.new(obBullColor, obBorderTransparency), border_style=obBoxBorder, border_width=1, bgcolor=obBullColor, 
 	 text=plotLabelOB ? _obLabel  + _plus : _empty, text_halign=text.align_right, text_valign=text.align_bottom, text_size=obLabelSize, text_color=obLabelColor)
@@ -276,7 +265,6 @@ if isObUp(1) and plotOB
 	array.push(_bullBoxesOB, _bullboxOB)
 
 //  ══  Bearish OB Box Plotting  ══
-
 if isObDown(1) and plotOB
 	_bearboxOB = box.new(left=bar_index - 2, top=math.max(high[2], high[1]), right=bar_index, bottom=low[2], border_color=color.new(obBearColor, obBorderTransparency), border_style=obBoxBorder, border_width=1, bgcolor=obBearColor, 
 	 text=plotLabelOB ? _obLabel  + _minus : _empty, text_halign=text.align_right, text_valign=text.align_bottom, text_size=obLabelSize, text_color=obLabelColor)
@@ -289,8 +277,8 @@ if plotOB
 	_controlBox(_bullBoxesOB, high, low, _ob)
 
 //////////  Fair Value Gap  //////////
-//  ══  Bullish FVG Box Plotting  ══
 
+//  ══  Bullish FVG Box Plotting  ══
 if isFvgUp(0)
 	box _bullboxFVG = na
 	if plotStructureBreakingFVG and (close[1] > top) and (low[1] < top) and (high[2] < top) and (low > top)
@@ -365,6 +353,7 @@ if plotRJB
 	_controlBox(_bullBoxesRJB, high, low, _rjb)
 
 //////////  Crossovers a.k.a. Break of Structure  //////////
+
 //  ══  Bullish BOS Box Plotting  ══
 if plotBOS
 	if ta.crossover(useHighLowForBullishBoS ? high : close, top)
@@ -389,24 +378,24 @@ if plotBOS
 
 //////////  Premium Premium & Discount Discount  //////////
 
-premiumPremium = plotPPDD and isObDown(0) and ((math.max(high, high[1]) > top and close < top) or (math.max(high, high[1]) > top[1] and close < top[1]))
-discountDiscount = plotPPDD and isObUp(0) and ((math.min(low, low[1]) < bottom and close > bottom) or (math.min(low, low[1]) < bottom[1] and close > bottom[1]))
-plotshape(premiumPremium, "Bearish PPDD OB", style=shape.triangledown , location=location.abovebar, color=ppddBearColor, size=size.tiny)
-plotshape(discountDiscount, "Bullish PPDD OB", style=shape.triangleup , location=location.belowbar, color=ppddBullColor, size=size.tiny)
+premiumPremium		= plotPPDD and isObDown(0) and ((math.max(high, high[1]) > top and close < top) or (math.max(high, high[1]) > top[1] and close < top[1]))
+discountDiscount	= plotPPDD and isObUp(0) and ((math.min(low, low[1]) < bottom and close > bottom) or (math.min(low, low[1]) < bottom[1] and close > bottom[1]))
+plotshape(premiumPremium,		"Bearish PPDD OB",			style = shape.triangledown,		location = location.abovebar,		color = ppddBearColor,		size = size.tiny)
+plotshape(discountDiscount,		"Bullish PPDD OB",			style = shape.triangleup,		location = location.belowbar,		color = ppddBullColor,		size = size.tiny)
 
 premiumPremium1 = plotPPDD and (isUp(1) and isDown(0) and close[0] < open[1]) and ((math.max(high, high[1]) > top and close < top) or (math.max(high, high[1]) > top[1] and close < top[1])) and not premiumPremium
 discountDiscount1 = plotPPDD and (isDown(1) and isUp(0) and close[0] > open[1]) and ((math.min(low, low[1]) < bottom and close > bottom) or (math.min(low, low[1]) < bottom[1] and close > bottom[1])) and not discountDiscount
-plotshape(premiumPremium1, "Bearish PPDD Weak OB", style=shape.xcross, location=location.abovebar, color=ppddBearColor, size=size.tiny)
-plotshape(discountDiscount1, "Bullish PPDD Weak OB", style=shape.xcross, location=location.belowbar, color=ppddBullColor, size=size.tiny)
+plotshape(premiumPremium1,		"Bearish PPDD Weak OB",		style = shape.xcross,			location = location.abovebar,		color = ppddBearColor,		size = size.tiny)
+plotshape(discountDiscount1,	"Bullish PPDD Weak OB",		style = shape.xcross,			location = location.belowbar,		color = ppddBullColor,		size = size.tiny)
 
 //////////  High Volume Bars  //////////
 
-volEma = ta.ema(volume, hvbEMAPeriod)
+volEma = ta.ema(volume,	hvbEMAPeriod)
 isHighVolume = volume > (hvbMultiplier * volEma)
-barcolor(plotHVB and isUp(0) and isHighVolume ? hvbBullColor : na, title="Bullish HVB")
-barcolor(plotHVB and isDown(0) and isHighVolume ? hvbBearColor : na, title="Bearish HVB")
+barcolor(plotHVB and isUp(0) and isHighVolume ? hvbBullColor : na,		title = "Bullish HVB")
+barcolor(plotHVB and isDown(0) and isHighVolume ? hvbBearColor : na,	title = "Bearish HVB")
 
 //////////  Stacked OB + FVG  //////////
 
-plotshape(plotOBFVG and isFvgDown(0) and isObDown(1), "Bearish OB+FVG Stack", style=shape.diamond, location=location.abovebar, color=obfvgBearColor, size=size.tiny)
-plotshape(plotOBFVG and isFvgUp(0) and isObUp(1), "Bullish OB+FVG Stack", style=shape.diamond, location=location.belowbar, color=obfvgBullColor, size=size.tiny)
+plotshape(plotOBFVG and isFvgDown(0) and isObDown(1),		"Bearish OB+FVG Stack",		style = shape.diamond,		location = location.abovebar,		color = obfvgBearColor,		size = size.tiny)
+plotshape(plotOBFVG and isFvgUp(0) and isObUp(1),			"Bullish OB+FVG Stack",		style = shape.diamond,		location = location.belowbar,		color = obfvgBullColor,		size = size.tiny)
